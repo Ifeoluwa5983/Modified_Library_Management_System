@@ -31,9 +31,9 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public Library findLibraryById(Integer id) throws ItemDoesNotExist {
-        Library library;
-        if(libraryRepository.existsById(id)){
-            return libraryRepository.findById(id).get();
+        Library library = libraryRepository.findById(id).orElse(null);
+        if(library != null){
+            return library;
         }else {
             throw new ItemDoesNotExist("The library with the id\"+ id + \"does not exist");
         }
