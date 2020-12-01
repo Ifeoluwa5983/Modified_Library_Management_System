@@ -1,5 +1,6 @@
 package com.library.libraryManagementSystem.service.library;
 
+import com.library.libraryManagementSystem.data.exception.LibraryException;
 import com.library.libraryManagementSystem.data.model.Library;
 import com.library.libraryManagementSystem.data.repository.LibraryRepository;
 import com.library.libraryManagementSystem.web.exception.ItemDoesNotExist;
@@ -40,30 +41,19 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public Library updateLibrary(Library library) throws ItemDoesNotExist {
-        log.info("Pet Request object --> {}", library);
-        Library savedLibrary = libraryRepository.findById(library.getId()).orElse(null);
-
-        if(savedLibrary != null){
-
-            if(library.getName() != null){
-                savedLibrary.setName(library.getName());
-            }
-
-            log.info("Before saving pet  object --> {}", savedLibrary);
-            return libraryRepository.save(savedLibrary);
+    public Library updateLibrary(Library library) throws LibraryException {
+        if(library == null){
+            throw new LibraryException("Create a library");
         }
-        else {
-            throw new ItemDoesNotExist("Pet with the Id: "+ library.getId() +" Does not exsit");
-        }
+        return libraryRepository.saveLibrary(library);
     }
 
     @Override
-    public Library createLibrary(Library library) throws ItemDoesNotExist {
+    public Library createLibrary(Library library) throws LibraryException {
         if(library == null){
-            throw new ItemDoesNotExist("Create a library");
+            throw new LibraryException("Create a library");
         }
-        return libraryRepository.save(library);
+        return libraryRepository.saveLibrary(library);
     }
 
 

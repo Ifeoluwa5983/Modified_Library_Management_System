@@ -1,5 +1,6 @@
 package com.library.libraryManagementSystem.service.book;
 
+import com.library.libraryManagementSystem.data.exception.BookException;
 import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.data.repository.BookRepository;
 import com.library.libraryManagementSystem.web.exception.ItemDoesNotExist;
@@ -36,34 +37,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book updateBook(Book book) throws ItemDoesNotExist {
-        Book book1 = bookRepository.findById(book.getId()).orElse(null);
-
-        if(book1 != null){
-            if(book1.getAuthor() != null){
-                book1.setAuthor(book.getAuthor());
-            }
-            if(book1.getTitle() != null){
-                book1.setTitle(book.getTitle());
-            }
-            if(book1.getIsAvailable() != null){
-                book1.setIsAvailable(book.getIsAvailable());
-            }
-            if(book1.getLibrary() != null){
-                book1.setLibrary(book.getLibrary());
-            }
-            return bookRepository.save(book1);
-        }else {
-            throw new ItemDoesNotExist("The book with the id does not exist");
+    public Book updateBook(Book book) throws BookException {
+        if(book == null){
+            throw new BookException("Please create a book");
         }
+        return bookRepository.saveBook(book);
     }
 
     @Override
-    public Book createBook(Book book) throws ItemDoesNotExist {
+    public Book createBook(Book book) throws BookException {
         if(book == null){
-            throw new ItemDoesNotExist("Please create a book");
+            throw new BookException("Please create a book");
         }
-        return bookRepository.save(book);
+        return bookRepository.saveBook(book);
     }
 
 
