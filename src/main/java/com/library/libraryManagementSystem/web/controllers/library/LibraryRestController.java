@@ -37,7 +37,7 @@ public class LibraryRestController {
         }
         return new ResponseEntity<>(library, HttpStatus.CREATED);
     }
-    @GetMapping("one/{id}")
+    @DeleteMapping("one/{id}")
     public ResponseEntity<?> deleteLibraryById(@PathVariable Integer id){
         try{
             libraryService.deleteLibraryById(id);
@@ -47,7 +47,7 @@ public class LibraryRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/update")
+    @PostMapping("/update")
     public @ResponseBody ResponseEntity<?> updateLibrary(@RequestBody Library library){
         try{
             libraryService.updateLibrary(library);

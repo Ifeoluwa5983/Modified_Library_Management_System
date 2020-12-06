@@ -37,7 +37,7 @@ public class BookRestController {
         }
         return new ResponseEntity<>(book, HttpStatus.CREATED);
     }
-    @GetMapping("one/{id}")
+    @DeleteMapping("one/{id}")
     public ResponseEntity<?> deleteBookById(@PathVariable Integer id){
         try{
             bookService.deleteBookById(id);
@@ -47,7 +47,7 @@ public class BookRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/update")
+    @PostMapping("/update")
     public @ResponseBody ResponseEntity<?> updateBook(@RequestBody Book book){
         try{
             bookService.updateBook(book);

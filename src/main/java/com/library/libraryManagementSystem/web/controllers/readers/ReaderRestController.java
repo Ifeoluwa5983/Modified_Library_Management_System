@@ -39,7 +39,7 @@ public class ReaderRestController {
         }
         return new ResponseEntity<>(reader, HttpStatus.CREATED);
     }
-    @GetMapping("one/{id}")
+    @DeleteMapping("one/{id}")
     public ResponseEntity<?> deleteReaderById(@PathVariable Integer id){
         try{
             readerService.deleteReaderById(id);
@@ -49,7 +49,7 @@ public class ReaderRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/update")
+    @PostMapping("/update")
     public @ResponseBody ResponseEntity<?> updateReader(@RequestBody Reader reader){
         try{
             readerService.updateReader(reader);
