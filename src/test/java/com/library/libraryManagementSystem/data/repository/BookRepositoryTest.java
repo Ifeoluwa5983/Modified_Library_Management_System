@@ -1,5 +1,6 @@
 package com.library.libraryManagementSystem.data.repository;
 
+import com.library.libraryManagementSystem.data.exception.BookException;
 import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.data.model.IsAvailable;
 import com.library.libraryManagementSystem.data.model.Library;
@@ -39,9 +40,10 @@ class BookRepositoryTest {
         book.setIsAvailable(IsAvailable.FALSE);
         book.setTitle("Achievements");
 
-        bookRepository.save(book);
+        assertThrows(BookException.class, ()->{
+            bookRepository.saveBook(book);
+        });
 
-        assertThat(book).isNotNull();
         log.info("Book after saving --> {}", book);
     }
 

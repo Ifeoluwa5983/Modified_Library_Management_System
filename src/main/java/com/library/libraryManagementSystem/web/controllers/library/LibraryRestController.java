@@ -1,9 +1,9 @@
 package com.library.libraryManagementSystem.web.controllers.library;
 
+import com.library.libraryManagementSystem.data.exception.LibraryException;
 import com.library.libraryManagementSystem.data.model.Library;
-import com.library.libraryManagementSystem.service.library.LibraryService;
 import com.library.libraryManagementSystem.service.library.LibraryServiceImpl;
-import com.library.libraryManagementSystem.web.exception.ItemDoesNotExist;
+import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,12 +32,12 @@ public class LibraryRestController {
     public ResponseEntity<?> createLibrary(@RequestBody Library library)  {
         try {
             libraryService.createLibrary(library);
-        } catch (NullPointerException | ItemDoesNotExist exe) {
+        } catch (LibraryException exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return new ResponseEntity<>(library, HttpStatus.CREATED);
     }
-    @GetMapping("one/{}")
+    @GetMapping("one/{id}")
     public ResponseEntity<?> deleteLibraryById(@PathVariable Integer id){
         try{
             libraryService.deleteLibraryById(id);
@@ -47,17 +47,17 @@ public class LibraryRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/one/{}")
-    public @ResponseBody ResponseEntity<?> updateLibraryById(@RequestBody Library library){
+    @PatchMapping("/update")
+    public @ResponseBody ResponseEntity<?> updateLibrary(@RequestBody Library library){
         try{
             libraryService.updateLibrary(library);
-        } catch (ItemDoesNotExist itemDoesNotExist) {
-            ResponseEntity.badRequest().body(itemDoesNotExist.getMessage());
+        } catch (LibraryException exe) {
+            ResponseEntity.badRequest().body(exe.getMessage());
         }
         return ResponseEntity.ok().body(library);
     }
 
-    @GetMapping("one/{}")
+    @GetMapping("one/{id}")
     public ResponseEntity<?> findLibraryById(@PathVariable Integer id){
 
         try{
@@ -67,4 +67,5 @@ public class LibraryRestController {
         }
         return ResponseEntity.ok().body(mylibrary);
     }
+
 }

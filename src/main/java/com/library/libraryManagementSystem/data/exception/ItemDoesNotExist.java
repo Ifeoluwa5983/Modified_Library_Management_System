@@ -1,4 +1,4 @@
-package com.library.libraryManagementSystem.web.exception;
+package com.library.libraryManagementSystem.data.exception;
 
 public class ItemDoesNotExist extends Exception {
     public ItemDoesNotExist() {

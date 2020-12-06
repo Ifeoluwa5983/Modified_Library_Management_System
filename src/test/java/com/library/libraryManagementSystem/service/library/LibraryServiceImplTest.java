@@ -1,8 +1,9 @@
 package com.library.libraryManagementSystem.service.library;
 
+import com.library.libraryManagementSystem.data.exception.LibraryException;
 import com.library.libraryManagementSystem.data.model.Library;
 import com.library.libraryManagementSystem.data.repository.LibraryRepository;
-import com.library.libraryManagementSystem.web.exception.ItemDoesNotExist;
+import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @Slf4j
@@ -35,7 +35,6 @@ class LibraryServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-
         library = new Library();
     }
 
@@ -54,10 +53,10 @@ class LibraryServiceImplTest {
     }
 
     @Test
-    void mockTestForCreateLibrary() throws ItemDoesNotExist {
-        when(libraryRepository.save(library)).thenReturn(library);
+    void mockTestForCreateLibrary() throws LibraryException {
+        when(libraryRepository.saveLibrary(library)).thenReturn(library);
         libraryService.createLibrary(library);
-        verify(libraryRepository, times(1)).save(library);
+        verify(libraryRepository, times(1)).saveLibrary(library);
     }
     @Test
     void mockTestForFindAllLibraries(){
@@ -67,13 +66,10 @@ class LibraryServiceImplTest {
     }
 
     @Test
-    void mockTestForUpdatingALibrary(){
-        Library testLibrary = libraryRepositoryImpl.findById(4).orElse(null);
-        assertThat(testLibrary).isNotNull();
-        log.info("Library before saving --> {}", testLibrary);
-
-        testLibrary.setName("Ife's library");
-        libraryRepositoryImpl.save(testLibrary);
-        log.info("Library after saving --> {}", testLibrary);
+    void mockTestForUpdatingALibrary() throws LibraryException {
+        when(libraryRepository.saveLibrary(library)).thenReturn(library);
+        library.setName("Library");
+        libraryService.updateLibrary(library);
+        verify(libraryRepository, times(1)).saveLibrary(library);
     }
 }

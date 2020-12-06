@@ -1,10 +1,8 @@
 package com.library.libraryManagementSystem.service.reader;
 
-import com.library.libraryManagementSystem.data.exception.LibraryException;
 import com.library.libraryManagementSystem.data.exception.ReaderException;
-import com.library.libraryManagementSystem.data.model.Library;
 import com.library.libraryManagementSystem.data.model.Reader;
-import com.library.libraryManagementSystem.web.exception.ItemDoesNotExist;
+import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
 
 import java.util.List;
 

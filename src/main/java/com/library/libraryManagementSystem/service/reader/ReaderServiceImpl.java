@@ -1,16 +1,14 @@
 package com.library.libraryManagementSystem.service.reader;
 
-import com.library.libraryManagementSystem.data.exception.BookException;
 import com.library.libraryManagementSystem.data.exception.ReaderException;
-import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.data.model.Reader;
-import com.library.libraryManagementSystem.data.repository.BookRepository;
 import com.library.libraryManagementSystem.data.repository.ReaderRepository;
-import com.library.libraryManagementSystem.web.exception.ItemDoesNotExist;
+import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ReaderServiceImpl implements ReaderService {
 
     @Autowired
@@ -32,8 +30,9 @@ public class ReaderServiceImpl implements ReaderService {
 
     @Override
     public Reader findReaderById(Integer id) throws ItemDoesNotExist {
-        if(readerRepository.existsById(id)){
-            return readerRepository.findById(id).get();
+        Reader reader = readerRepository.findById(id).orElse(null);
+        if(reader != null){
+            return reader;
         }else{
             throw new ItemDoesNotExist("The book with the id does not exist");
         }

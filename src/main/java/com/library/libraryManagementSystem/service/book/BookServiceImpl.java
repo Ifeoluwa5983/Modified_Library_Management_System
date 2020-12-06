@@ -3,11 +3,12 @@ package com.library.libraryManagementSystem.service.book;
 import com.library.libraryManagementSystem.data.exception.BookException;
 import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.data.repository.BookRepository;
-import com.library.libraryManagementSystem.web.exception.ItemDoesNotExist;
+import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class BookServiceImpl implements BookService {
 
     @Autowired
@@ -29,8 +30,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book findBookById(Integer id) throws ItemDoesNotExist {
-        if(bookRepository.existsById(id)){
-            return bookRepository.findById(id).get();
+
+        Book book = bookRepository.findById(id).orElse(null);
+
+        if(book != null){
+            return book;
         }else{
             throw new ItemDoesNotExist("The book with the id does not exist");
         }

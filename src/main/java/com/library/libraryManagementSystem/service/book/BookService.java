@@ -2,8 +2,7 @@ package com.library.libraryManagementSystem.service.book;
 
 import com.library.libraryManagementSystem.data.exception.BookException;
 import com.library.libraryManagementSystem.data.model.Book;
-import com.library.libraryManagementSystem.data.model.Library;
-import com.library.libraryManagementSystem.web.exception.ItemDoesNotExist;
+import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
 
 import java.util.List;
 
