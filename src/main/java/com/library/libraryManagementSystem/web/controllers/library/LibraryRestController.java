@@ -1,6 +1,6 @@
 package com.library.libraryManagementSystem.web.controllers.library;
 
-import com.library.libraryManagementSystem.data.exception.LibraryException;
+import com.library.libraryManagementSystem.data.exception.ExceptionsInLibraryEntity;
 import com.library.libraryManagementSystem.data.model.Library;
 import com.library.libraryManagementSystem.service.library.LibraryServiceImpl;
 import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
@@ -32,7 +32,7 @@ public class LibraryRestController {
     public ResponseEntity<?> createLibrary(@RequestBody Library library)  {
         try {
             libraryService.createLibrary(library);
-        } catch (LibraryException exe) {
+        } catch (ExceptionsInLibraryEntity exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return new ResponseEntity<>(library, HttpStatus.CREATED);
@@ -44,14 +44,14 @@ public class LibraryRestController {
         }catch (ItemDoesNotExist exe){
             ResponseEntity.badRequest().body(exe.getMessage());
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body("Deleted");
     }
 
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public @ResponseBody ResponseEntity<?> updateLibrary(@RequestBody Library library){
         try{
             libraryService.updateLibrary(library);
-        } catch (LibraryException exe) {
+        } catch (ExceptionsInLibraryEntity exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return ResponseEntity.ok().body(library);

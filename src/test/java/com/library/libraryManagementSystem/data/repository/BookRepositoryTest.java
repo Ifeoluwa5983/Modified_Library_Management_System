@@ -1,6 +1,6 @@
 package com.library.libraryManagementSystem.data.repository;
 
-import com.library.libraryManagementSystem.data.exception.BookException;
+import com.library.libraryManagementSystem.data.exception.ExceptionsInBookEntity;
 import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.data.model.IsAvailable;
 import com.library.libraryManagementSystem.data.model.Library;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.jdbc.Sql;
 
 import javax.transaction.Transactional;
 
@@ -40,7 +39,7 @@ class BookRepositoryTest {
         book.setIsAvailable(IsAvailable.FALSE);
         book.setTitle("Achievements");
 
-        assertThrows(BookException.class, ()->{
+        assertThrows(ExceptionsInBookEntity.class, ()->{
             bookRepository.saveBook(book);
         });
 

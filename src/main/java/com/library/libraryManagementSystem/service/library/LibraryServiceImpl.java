@@ -1,6 +1,6 @@
 package com.library.libraryManagementSystem.service.library;
 
-import com.library.libraryManagementSystem.data.exception.LibraryException;
+import com.library.libraryManagementSystem.data.exception.ExceptionsInLibraryEntity;
 import com.library.libraryManagementSystem.data.model.Library;
 import com.library.libraryManagementSystem.data.repository.LibraryRepository;
 import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
@@ -42,17 +42,17 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public Library updateLibrary(Library library) throws LibraryException {
+    public Library updateLibrary(Library library) throws ExceptionsInLibraryEntity {
         if(library == null){
-            throw new LibraryException("Create a library");
+            throw new ExceptionsInLibraryEntity("Create a library");
         }
         return libraryRepository.saveLibrary(library);
     }
 
     @Override
-    public Library createLibrary(Library library) throws LibraryException {
+    public Library createLibrary(Library library) throws ExceptionsInLibraryEntity {
         if(library == null){
-            throw new LibraryException("Create a library");
+            throw new ExceptionsInLibraryEntity("Create a library");
         }
         return libraryRepository.saveLibrary(library);
     }

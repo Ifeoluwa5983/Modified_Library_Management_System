@@ -1,6 +1,6 @@
 package com.library.libraryManagementSystem.service.reader;
 
-import com.library.libraryManagementSystem.data.exception.ReaderException;
+import com.library.libraryManagementSystem.data.exception.ExceptionInReaderEntity;
 import com.library.libraryManagementSystem.data.model.Reader;
 import com.library.libraryManagementSystem.data.repository.ReaderRepository;
 import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
@@ -39,17 +39,17 @@ public class ReaderServiceImpl implements ReaderService {
     }
 
     @Override
-    public Reader updateReader(Reader reader) throws ReaderException {
+    public Reader updateReader(Reader reader) throws ExceptionInReaderEntity {
         if(reader == null){
-            throw new ReaderException("Please create a book");
+            throw new ExceptionInReaderEntity("Please create a book");
         }
         return readerRepository.saveReader(reader);
     }
 
     @Override
-    public Reader createReader(Reader reader) throws ReaderException {
+    public Reader createReader(Reader reader) throws ExceptionInReaderEntity {
         if(reader == null){
-            throw new ReaderException("Please create a book");
+            throw new ExceptionInReaderEntity("Please create a book");
         }
         return readerRepository.saveReader(reader);
     }

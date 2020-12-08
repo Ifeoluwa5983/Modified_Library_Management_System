@@ -1,6 +1,6 @@
 package com.library.libraryManagementSystem.web.controllers.book;
 
-import com.library.libraryManagementSystem.data.exception.BookException;
+import com.library.libraryManagementSystem.data.exception.ExceptionsInBookEntity;
 import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
 import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.service.book.BookServiceImpl;
@@ -32,7 +32,7 @@ public class BookRestController {
     public ResponseEntity<?> createBook(@RequestBody Book book)  {
         try {
             bookService.createBook(book);
-        } catch (BookException exe) {
+        } catch (ExceptionsInBookEntity exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return new ResponseEntity<>(book, HttpStatus.CREATED);
@@ -44,14 +44,14 @@ public class BookRestController {
         }catch (ItemDoesNotExist exe){
             ResponseEntity.badRequest().body(exe.getMessage());
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body("Deleted");
     }
 
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public @ResponseBody ResponseEntity<?> updateBook(@RequestBody Book book){
         try{
             bookService.updateBook(book);
-        } catch (BookException exe) {
+        } catch (ExceptionsInBookEntity exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return ResponseEntity.ok().body(book);

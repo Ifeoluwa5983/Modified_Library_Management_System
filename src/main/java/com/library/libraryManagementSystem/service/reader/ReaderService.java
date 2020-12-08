@@ -1,6 +1,6 @@
 package com.library.libraryManagementSystem.service.reader;
 
-import com.library.libraryManagementSystem.data.exception.ReaderException;
+import com.library.libraryManagementSystem.data.exception.ExceptionInReaderEntity;
 import com.library.libraryManagementSystem.data.model.Reader;
 import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
 
@@ -13,7 +13,7 @@ public interface ReaderService {
 
     public Reader findReaderById(Integer id) throws ItemDoesNotExist;
 
-    public Reader updateReader(Reader reader) throws ReaderException;
+    public Reader updateReader(Reader reader) throws ExceptionInReaderEntity;
 
-    public Reader createReader(Reader reader) throws ReaderException;
+    public Reader createReader(Reader reader) throws ExceptionInReaderEntity;
 }

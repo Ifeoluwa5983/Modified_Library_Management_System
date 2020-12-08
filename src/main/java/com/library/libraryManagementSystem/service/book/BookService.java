@@ -1,6 +1,6 @@
 package com.library.libraryManagementSystem.service.book;
 
-import com.library.libraryManagementSystem.data.exception.BookException;
+import com.library.libraryManagementSystem.data.exception.ExceptionsInBookEntity;
 import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
 
@@ -13,7 +13,7 @@ public interface BookService {
 
     public Book findBookById(Integer id) throws ItemDoesNotExist;
 
-    public Book updateBook(Book book) throws BookException;
+    public Book updateBook(Book book) throws ExceptionsInBookEntity;
 
-    public Book createBook(Book book) throws BookException;
+    public Book createBook(Book book) throws ExceptionsInBookEntity;
 }

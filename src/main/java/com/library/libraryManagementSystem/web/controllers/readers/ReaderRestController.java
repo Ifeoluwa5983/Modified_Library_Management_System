@@ -1,11 +1,8 @@
 package com.library.libraryManagementSystem.web.controllers.readers;
 
 import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
-import com.library.libraryManagementSystem.data.exception.LibraryException;
-import com.library.libraryManagementSystem.data.exception.ReaderException;
-import com.library.libraryManagementSystem.data.model.Library;
+import com.library.libraryManagementSystem.data.exception.ExceptionInReaderEntity;
 import com.library.libraryManagementSystem.data.model.Reader;
-import com.library.libraryManagementSystem.service.library.LibraryServiceImpl;
 import com.library.libraryManagementSystem.service.reader.ReaderServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +31,7 @@ public class ReaderRestController {
     public ResponseEntity<?> createReader(@RequestBody Reader reader)  {
         try {
             readerService.createReader(reader);
-        } catch (ReaderException exe) {
+        } catch (ExceptionInReaderEntity exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return new ResponseEntity<>(reader, HttpStatus.CREATED);
@@ -46,14 +43,14 @@ public class ReaderRestController {
         }catch (ItemDoesNotExist exe){
             ResponseEntity.badRequest().body(exe.getMessage());
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body("Deleted");
     }
 
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public @ResponseBody ResponseEntity<?> updateReader(@RequestBody Reader reader){
         try{
             readerService.updateReader(reader);
-        } catch (ReaderException exe) {
+        } catch (ExceptionInReaderEntity exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return ResponseEntity.ok().body(reader);

@@ -1,6 +1,6 @@
 package com.library.libraryManagementSystem.service.library;
 
-import com.library.libraryManagementSystem.data.exception.LibraryException;
+import com.library.libraryManagementSystem.data.exception.ExceptionsInLibraryEntity;
 import com.library.libraryManagementSystem.data.model.Library;
 import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
 
@@ -14,7 +14,7 @@ public interface LibraryService {
 
     public Library findLibraryById(Integer id) throws ItemDoesNotExist;
 
-    public Library updateLibrary(Library library) throws LibraryException;
+    public Library updateLibrary(Library library) throws ExceptionsInLibraryEntity;
 
-    public Library createLibrary(Library library) throws LibraryException;
+    public Library createLibrary(Library library) throws ExceptionsInLibraryEntity;
 }

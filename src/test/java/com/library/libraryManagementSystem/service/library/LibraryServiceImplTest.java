@@ -1,6 +1,6 @@
 package com.library.libraryManagementSystem.service.library;
 
-import com.library.libraryManagementSystem.data.exception.LibraryException;
+import com.library.libraryManagementSystem.data.exception.ExceptionsInLibraryEntity;
 import com.library.libraryManagementSystem.data.model.Library;
 import com.library.libraryManagementSystem.data.repository.LibraryRepository;
 import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
@@ -53,7 +53,7 @@ class LibraryServiceImplTest {
     }
 
     @Test
-    void mockTestForCreateLibrary() throws LibraryException {
+    void mockTestForCreateLibrary() throws ExceptionsInLibraryEntity {
         when(libraryRepository.saveLibrary(library)).thenReturn(library);
         libraryService.createLibrary(library);
         verify(libraryRepository, times(1)).saveLibrary(library);
@@ -66,7 +66,7 @@ class LibraryServiceImplTest {
     }
 
     @Test
-    void mockTestForUpdatingALibrary() throws LibraryException {
+    void mockTestForUpdatingALibrary() throws ExceptionsInLibraryEntity {
         when(libraryRepository.saveLibrary(library)).thenReturn(library);
         library.setName("Library");
         libraryService.updateLibrary(library);

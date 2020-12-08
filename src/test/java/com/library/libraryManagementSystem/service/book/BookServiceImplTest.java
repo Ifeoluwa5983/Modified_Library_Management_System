@@ -1,6 +1,6 @@
 package com.library.libraryManagementSystem.service.book;
 
-import com.library.libraryManagementSystem.data.exception.BookException;
+import com.library.libraryManagementSystem.data.exception.ExceptionsInBookEntity;
 import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.data.repository.BookRepository;
 import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
@@ -42,7 +42,7 @@ class BookServiceImplTest {
     }
 
     @Test
-    void mockTestForCreateBook() throws BookException {
+    void mockTestForCreateBook() throws ExceptionsInBookEntity {
         when(bookRepository.saveBook(book)).thenReturn(book);
         bookService.createBook(book);
         verify(bookRepository, times(1)).saveBook(book);
@@ -71,7 +71,7 @@ class BookServiceImplTest {
     @Test
     @Transactional
     @Rollback(value = false)
-    void mockTestForUpdatingABook() throws BookException {
+    void mockTestForUpdatingABook() throws ExceptionsInBookEntity {
         when(bookRepository.saveBook(book)).thenReturn(book);
         book.setTitle("Dead");
         bookService.updateBook(book);

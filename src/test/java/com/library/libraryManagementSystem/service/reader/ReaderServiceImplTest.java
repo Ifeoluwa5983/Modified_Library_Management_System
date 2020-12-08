@@ -1,27 +1,21 @@
 package com.library.libraryManagementSystem.service.reader;
 
-import com.library.libraryManagementSystem.data.exception.BookException;
+import com.library.libraryManagementSystem.data.exception.ExceptionsInBookEntity;
 import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
-import com.library.libraryManagementSystem.data.exception.ReaderException;
-import com.library.libraryManagementSystem.data.model.Book;
+import com.library.libraryManagementSystem.data.exception.ExceptionInReaderEntity;
 import com.library.libraryManagementSystem.data.model.Reader;
-import com.library.libraryManagementSystem.data.repository.BookRepository;
 import com.library.libraryManagementSystem.data.repository.ReaderRepository;
-import com.library.libraryManagementSystem.service.book.BookService;
-import com.library.libraryManagementSystem.service.book.BookServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ReaderServiceImplTest {
@@ -40,7 +34,7 @@ class ReaderServiceImplTest {
     }
 
     @Test
-    void mockTestForCreateBook() throws ReaderException {
+    void mockTestForCreateBook() throws ExceptionInReaderEntity {
         when(readerRepository.saveReader(reader)).thenReturn(reader);
         readerService.createReader(reader);
         verify(readerRepository, times(1)).saveReader(reader);
@@ -69,7 +63,7 @@ class ReaderServiceImplTest {
     @Test
     @Transactional
     @Rollback(value = false)
-    void mockTestForUpdatingABook() throws BookException, ReaderException {
+    void mockTestForUpdatingABook() throws ExceptionsInBookEntity, ExceptionInReaderEntity {
         when(readerRepository.saveReader(reader)).thenReturn(reader);
         reader.setLastName("Chima");
         readerService.updateReader(reader);
