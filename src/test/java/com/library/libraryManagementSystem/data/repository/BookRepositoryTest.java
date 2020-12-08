@@ -108,8 +108,8 @@ class BookRepositoryTest {
         book.setLibrary(library);
         book2.setLibrary(library);
 
-        library.addBook(book);
-        library.addBook(book2);
+        library.setBook(book);
+        library.setBook(book2);
 
         bookRepository.save(book);
         bookRepository.save(book);

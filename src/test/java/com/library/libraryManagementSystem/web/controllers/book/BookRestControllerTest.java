@@ -1,6 +1,8 @@
-package com.library.libraryManagementSystem.web.controllers.library;
+package com.library.libraryManagementSystem.web.controllers.book;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.library.libraryManagementSystem.data.model.Book;
+import com.library.libraryManagementSystem.data.model.IsAvailable;
 import com.library.libraryManagementSystem.data.model.Library;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,72 +13,76 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class LibraryRestControllerTest {
+class BookRestControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
 
     ObjectMapper mapper;
-    Library library;
+    Book book;
 
     @BeforeEach
     void setUp() {
         mapper = new ObjectMapper();
-        library = new Library();
+        book = new Book();
     }
 
     @Test
-    void testCreateLibraryEndpoint_thenReturnOK() throws Exception {
-        library.setName("The end");
+    void testCreateBookEndpoint_thenReturnOK() throws Exception {
+        book.setTitle("Rapture");
+        book.setIsAvailable(IsAvailable.FALSE);
+        book.setAuthor("Chima");
 
-        this.mockMvc.perform(post("/library/create")
+        this.mockMvc.perform(post("/book/create")
                 .contentType("application/json")
-                .content(mapper.writeValueAsString(library)))
+                .content(mapper.writeValueAsString(book)))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andReturn();
     }
 
     @Test
-    void testGetAllLibrariesEndpoint() throws Exception {
-        this.mockMvc.perform(get("/library/all"))
+    void testGetAllBooksEndpoint() throws Exception {
+        this.mockMvc.perform(get("/book/all"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
     }
 
     @Test
-    void testGetLibraryByIdEndpoint() throws Exception {
-        this.mockMvc.perform(get("/library/one/1"))
+    void testGetBookByIdEndpoint() throws Exception {
+        this.mockMvc.perform(get("/book/one/4"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
     }
 
     @Test
-    void testDeleteLibraryByIdEndpoint() throws Exception {
-        this.mockMvc.perform(delete("/library/one/2"))
+    void testDeleteBookByIdEndpoint() throws Exception {
+        this.mockMvc.perform(delete("/book/one/4"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
     }
 
     @Test
-    void testUpdateLibraryEndpoint() throws Exception {
-        library.setId(1);
-        library.setName("Ife's library");
+    void testUpdateBookEndpoint() throws Exception {
+        book.setId(5);
+        book.setAuthor("Iclass");
 
-        this.mockMvc.perform(patch("/library/update")
+        this.mockMvc.perform(patch("/book/update")
                 .contentType("application/json")
-                .content(mapper.writeValueAsString(library)))
+                .content(mapper.writeValueAsString(book)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
     }
+
 
 }

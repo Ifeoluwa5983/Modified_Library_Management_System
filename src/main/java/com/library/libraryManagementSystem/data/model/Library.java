@@ -1,5 +1,6 @@
 package com.library.libraryManagementSystem.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,9 +18,10 @@ public class Library {
     private String name;
 
     @OneToMany(mappedBy = "library", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Book> books;
 
-    public void addBook (Book book) {
+    public void setBook (Book book) {
         if (books == null) {
             books = new ArrayList<>();
         }

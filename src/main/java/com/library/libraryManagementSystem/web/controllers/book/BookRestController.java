@@ -22,7 +22,7 @@ public class BookRestController {
 
     Book myBook;
 
-    @GetMapping("/libraries")
+    @GetMapping("/all")
     public ResponseEntity<?> getAllBooks(){
         List<Book> books = bookService.getAllBooks();
         log.info("All libraries --> {}", books);
@@ -46,6 +46,7 @@ public class BookRestController {
         }
         return ResponseEntity.ok().body("Deleted");
     }
+
 
     @PatchMapping("/update")
     public @ResponseBody ResponseEntity<?> updateBook(@RequestBody Book book){

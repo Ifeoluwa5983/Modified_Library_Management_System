@@ -22,7 +22,7 @@ public class LibraryRestController {
 
     Library mylibrary;
 
-    @GetMapping("/libraries")
+    @GetMapping("/all")
     public ResponseEntity<?> getAllLibraries(){
         List<Library> libraries = libraryService.getAllLibraries();
         log.info("All libraries --> {}", libraries);

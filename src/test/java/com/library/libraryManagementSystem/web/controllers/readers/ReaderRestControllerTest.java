@@ -1,7 +1,9 @@
-package com.library.libraryManagementSystem.web.controllers.library;
+package com.library.libraryManagementSystem.web.controllers.readers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.library.libraryManagementSystem.data.model.Library;
+import com.library.libraryManagementSystem.data.model.Book;
+import com.library.libraryManagementSystem.data.model.IsAvailable;
+import com.library.libraryManagementSystem.data.model.Reader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,72 +13,78 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class LibraryRestControllerTest {
+class ReaderRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     ObjectMapper mapper;
-    Library library;
+    Reader reader;
 
     @BeforeEach
     void setUp() {
         mapper = new ObjectMapper();
-        library = new Library();
+        reader = new Reader();
     }
 
     @Test
-    void testCreateLibraryEndpoint_thenReturnOK() throws Exception {
-        library.setName("The end");
+    void testCreateReaderEndpoint_thenReturnOK() throws Exception {
 
-        this.mockMvc.perform(post("/library/create")
+        reader.setLastName("iClass");
+        reader.setFirstName("Chima");
+        reader.setPhoneNumber("09087654321");
+        reader.setEmail("test@gmail.com");
+
+        this.mockMvc.perform(post("/reader/create")
                 .contentType("application/json")
-                .content(mapper.writeValueAsString(library)))
+                .content(mapper.writeValueAsString(reader)))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andReturn();
     }
 
     @Test
-    void testGetAllLibrariesEndpoint() throws Exception {
-        this.mockMvc.perform(get("/library/all"))
+    void testGetAllReadersEndpoint() throws Exception {
+        this.mockMvc.perform(get("/reader/all"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
     }
 
     @Test
-    void testGetLibraryByIdEndpoint() throws Exception {
-        this.mockMvc.perform(get("/library/one/1"))
+    void testGetReaderByIdEndpoint() throws Exception {
+        this.mockMvc.perform(get("/reader/one/4"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
     }
 
     @Test
-    void testDeleteLibraryByIdEndpoint() throws Exception {
-        this.mockMvc.perform(delete("/library/one/2"))
+    void testDeleteReaderByIdEndpoint() throws Exception {
+        this.mockMvc.perform(delete("/reader/one/4"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
     }
 
     @Test
-    void testUpdateLibraryEndpoint() throws Exception {
-        library.setId(1);
-        library.setName("Ife's library");
+    void testUpdateReaderEndpoint() throws Exception {
+        reader.setId(2);
+        reader.setFirstName("Dorcas");
 
-        this.mockMvc.perform(patch("/library/update")
+        this.mockMvc.perform(patch("/reader/update")
                 .contentType("application/json")
-                .content(mapper.writeValueAsString(library)))
+                .content(mapper.writeValueAsString(reader)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
     }
+
+
 
 }

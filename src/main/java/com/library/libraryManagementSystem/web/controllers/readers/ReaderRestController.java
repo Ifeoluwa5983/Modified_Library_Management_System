@@ -21,7 +21,7 @@ public class ReaderRestController {
 
     Reader reader;
 
-    @GetMapping("/libraries")
+    @GetMapping("/all")
     public ResponseEntity<?> getAllReaders(){
         List<Reader> readers = readerService.getAllReaders();
         log.info("All libraries --> {}", readers);
