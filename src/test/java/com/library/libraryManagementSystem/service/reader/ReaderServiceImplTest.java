@@ -1,8 +1,8 @@
 package com.library.libraryManagementSystem.service.reader;
 
-import com.library.libraryManagementSystem.data.exception.ExceptionsInBookEntity;
-import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
-import com.library.libraryManagementSystem.data.exception.ExceptionInReaderEntity;
+import com.library.libraryManagementSystem.data.exception.BookEntityException;
+import com.library.libraryManagementSystem.data.exception.NoSuchElementException;
+import com.library.libraryManagementSystem.data.exception.ReaderEntityException;
 import com.library.libraryManagementSystem.data.model.Reader;
 import com.library.libraryManagementSystem.data.repository.ReaderRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +34,7 @@ class ReaderServiceImplTest {
     }
 
     @Test
-    void mockTestForCreateBook() throws ExceptionInReaderEntity {
+    void mockTestForCreateBook() throws ReaderEntityException {
         when(readerRepository.saveReader(reader)).thenReturn(reader);
         readerService.createReader(reader);
         verify(readerRepository, times(1)).saveReader(reader);
@@ -47,14 +47,14 @@ class ReaderServiceImplTest {
     }
 
     @Test
-    void mockTestForFindBookById() throws ItemDoesNotExist {
+    void mockTestForFindBookById() throws NoSuchElementException {
         when(readerRepository.findById(2)).thenReturn(Optional.of(reader));
         readerService.findReaderById(2);
         verify(readerRepository, times(1)).findById(2);
     }
 
     @Test
-    void mockTestForDeleteBookById() throws ItemDoesNotExist {
+    void mockTestForDeleteBookById() throws NoSuchElementException {
         doNothing().when(readerRepository).deleteById(1);
         readerService.deleteReaderById(1);
         verify(readerRepository, times(1)).deleteById(1);
@@ -63,7 +63,7 @@ class ReaderServiceImplTest {
     @Test
     @Transactional
     @Rollback(value = false)
-    void mockTestForUpdatingABook() throws ExceptionsInBookEntity, ExceptionInReaderEntity {
+    void mockTestForUpdatingABook() throws BookEntityException, ReaderEntityException {
         when(readerRepository.saveReader(reader)).thenReturn(reader);
         reader.setLastName("Chima");
         readerService.updateReader(reader);

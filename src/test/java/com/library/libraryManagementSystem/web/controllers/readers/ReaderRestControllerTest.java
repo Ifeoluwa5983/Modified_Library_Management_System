@@ -40,7 +40,7 @@ class ReaderRestControllerTest {
         reader.setPhoneNumber("09087654321");
         reader.setEmail("test@gmail.com");
 
-        this.mockMvc.perform(post("/reader/create")
+        this.mockMvc.perform(post("/reader/createReader")
                 .contentType("application/json")
                 .content(mapper.writeValueAsString(reader)))
                 .andDo(print())
@@ -50,7 +50,7 @@ class ReaderRestControllerTest {
 
     @Test
     void testGetAllReadersEndpoint() throws Exception {
-        this.mockMvc.perform(get("/reader/all"))
+        this.mockMvc.perform(get("/reader/allReaders"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
@@ -58,7 +58,7 @@ class ReaderRestControllerTest {
 
     @Test
     void testGetReaderByIdEndpoint() throws Exception {
-        this.mockMvc.perform(get("/reader/one/4"))
+        this.mockMvc.perform(get("/reader/findReaderById/4"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
@@ -66,7 +66,7 @@ class ReaderRestControllerTest {
 
     @Test
     void testDeleteReaderByIdEndpoint() throws Exception {
-        this.mockMvc.perform(delete("/reader/one/4"))
+        this.mockMvc.perform(delete("/reader/deleteReaderById/4"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
@@ -77,7 +77,7 @@ class ReaderRestControllerTest {
         reader.setId(2);
         reader.setFirstName("Dorcas");
 
-        this.mockMvc.perform(patch("/reader/update")
+        this.mockMvc.perform(patch("/reader/updateReader")
                 .contentType("application/json")
                 .content(mapper.writeValueAsString(reader)))
                 .andDo(print())

@@ -1,9 +1,9 @@
 package com.library.libraryManagementSystem.service.library;
 
-import com.library.libraryManagementSystem.data.exception.ExceptionsInLibraryEntity;
+import com.library.libraryManagementSystem.data.exception.LibraryEntityException;
 import com.library.libraryManagementSystem.data.model.Library;
 import com.library.libraryManagementSystem.data.repository.LibraryRepository;
-import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
+import com.library.libraryManagementSystem.data.exception.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,21 +39,21 @@ class LibraryServiceImplTest {
     }
 
     @Test
-    void mockTestForDeleteLibrary() throws ItemDoesNotExist {
+    void mockTestForDeleteLibrary() throws NoSuchElementException {
         doNothing().when(libraryRepository).deleteById(3);
         libraryService.deleteLibraryById(3);
         verify(libraryRepository, times(1)).deleteById(3);
     }
 
     @Test
-    void mockTestForFindLibraryById() throws ItemDoesNotExist {
+    void mockTestForFindLibraryById() throws NoSuchElementException {
         when(libraryRepository.findById(4)).thenReturn(Optional.of(library));
         libraryService.findLibraryById(4);
         verify(libraryRepository, times(1)).findById(4);
     }
 
     @Test
-    void mockTestForCreateLibrary() throws ExceptionsInLibraryEntity {
+    void mockTestForCreateLibrary() throws LibraryEntityException {
         when(libraryRepository.saveLibrary(library)).thenReturn(library);
         libraryService.createLibrary(library);
         verify(libraryRepository, times(1)).saveLibrary(library);
@@ -66,7 +66,7 @@ class LibraryServiceImplTest {
     }
 
     @Test
-    void mockTestForUpdatingALibrary() throws ExceptionsInLibraryEntity {
+    void mockTestForUpdatingALibrary() throws LibraryEntityException {
         when(libraryRepository.saveLibrary(library)).thenReturn(library);
         library.setName("Library");
         libraryService.updateLibrary(library);

@@ -39,7 +39,7 @@ class BookRestControllerTest {
         book.setIsAvailable(IsAvailable.FALSE);
         book.setAuthor("Chima");
 
-        this.mockMvc.perform(post("/book/create")
+        this.mockMvc.perform(post("/book/createBook")
                 .contentType("application/json")
                 .content(mapper.writeValueAsString(book)))
                 .andDo(print())
@@ -49,7 +49,7 @@ class BookRestControllerTest {
 
     @Test
     void testGetAllBooksEndpoint() throws Exception {
-        this.mockMvc.perform(get("/book/all"))
+        this.mockMvc.perform(get("/book/allBooks"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
@@ -57,7 +57,7 @@ class BookRestControllerTest {
 
     @Test
     void testGetBookByIdEndpoint() throws Exception {
-        this.mockMvc.perform(get("/book/one/4"))
+        this.mockMvc.perform(get("/book/findBookById/4"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
@@ -65,7 +65,7 @@ class BookRestControllerTest {
 
     @Test
     void testDeleteBookByIdEndpoint() throws Exception {
-        this.mockMvc.perform(delete("/book/one/4"))
+        this.mockMvc.perform(delete("/book/deleteBookById/4"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
@@ -76,7 +76,7 @@ class BookRestControllerTest {
         book.setId(5);
         book.setAuthor("Iclass");
 
-        this.mockMvc.perform(patch("/book/update")
+        this.mockMvc.perform(patch("/book/updateBook")
                 .contentType("application/json")
                 .content(mapper.writeValueAsString(book)))
                 .andDo(print())

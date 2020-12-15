@@ -1,12 +1,11 @@
 package com.library.libraryManagementSystem.web.controllers.library;
 
-import com.library.libraryManagementSystem.data.exception.ExceptionsInLibraryEntity;
+import com.library.libraryManagementSystem.data.exception.LibraryEntityException;
 import com.library.libraryManagementSystem.data.model.Library;
 import com.library.libraryManagementSystem.service.library.LibraryServiceImpl;
-import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
+import com.library.libraryManagementSystem.data.exception.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,48 +21,48 @@ public class LibraryRestController {
 
     Library mylibrary;
 
-    @GetMapping("/all")
+    @GetMapping("/allLibraries")
     public ResponseEntity<?> getAllLibraries(){
         List<Library> libraries = libraryService.getAllLibraries();
         log.info("All libraries --> {}", libraries);
         return ResponseEntity.ok().body(libraries);
     }
-    @PostMapping("/create")
+    @PostMapping("/createLibrary")
     public ResponseEntity<?> createLibrary(@RequestBody Library library)  {
         try {
             libraryService.createLibrary(library);
-        } catch (ExceptionsInLibraryEntity exe) {
+        } catch (LibraryEntityException exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
-        return new ResponseEntity<>(library, HttpStatus.CREATED);
+        return ResponseEntity.ok().body("created");
     }
-    @DeleteMapping("one/{id}")
+    @DeleteMapping("/deleteLibraryById/{id}")
     public ResponseEntity<?> deleteLibraryById(@PathVariable Integer id){
         try{
             libraryService.deleteLibraryById(id);
-        }catch (ItemDoesNotExist exe){
+        }catch (NoSuchElementException exe){
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return ResponseEntity.ok().body("Deleted");
     }
 
-    @PatchMapping("/update")
+    @PatchMapping("/updateLibrary")
     public @ResponseBody ResponseEntity<?> updateLibrary(@RequestBody Library library){
         try{
             libraryService.updateLibrary(library);
-        } catch (ExceptionsInLibraryEntity exe) {
+        } catch (LibraryEntityException exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return ResponseEntity.ok().body(library);
     }
 
-    @GetMapping("one/{id}")
+    @GetMapping("/findLibraryById/{id}")
     public ResponseEntity<?> findLibraryById(@PathVariable Integer id){
 
         try{
             mylibrary = libraryService.findLibraryById(id);
-        } catch (ItemDoesNotExist itemDoesNotExist) {
-            ResponseEntity.badRequest().body(itemDoesNotExist.getMessage());
+        } catch (NoSuchElementException noSuchElementException) {
+            ResponseEntity.badRequest().body(noSuchElementException.getMessage());
         }
         return ResponseEntity.ok().body(mylibrary);
     }

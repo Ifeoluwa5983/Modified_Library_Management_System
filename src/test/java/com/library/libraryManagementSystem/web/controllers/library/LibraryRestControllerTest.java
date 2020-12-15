@@ -34,7 +34,7 @@ class LibraryRestControllerTest {
     void testCreateLibraryEndpoint_thenReturnOK() throws Exception {
         library.setName("The end");
 
-        this.mockMvc.perform(post("/library/create")
+        this.mockMvc.perform(post("/library/createLibrary")
                 .contentType("application/json")
                 .content(mapper.writeValueAsString(library)))
                 .andDo(print())
@@ -44,7 +44,7 @@ class LibraryRestControllerTest {
 
     @Test
     void testGetAllLibrariesEndpoint() throws Exception {
-        this.mockMvc.perform(get("/library/all"))
+        this.mockMvc.perform(get("/library/allLibraries"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
@@ -52,7 +52,7 @@ class LibraryRestControllerTest {
 
     @Test
     void testGetLibraryByIdEndpoint() throws Exception {
-        this.mockMvc.perform(get("/library/one/1"))
+        this.mockMvc.perform(get("/library/findLibraryById/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
@@ -60,7 +60,7 @@ class LibraryRestControllerTest {
 
     @Test
     void testDeleteLibraryByIdEndpoint() throws Exception {
-        this.mockMvc.perform(delete("/library/one/2"))
+        this.mockMvc.perform(delete("/library/deleteLibraryById/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
@@ -71,7 +71,7 @@ class LibraryRestControllerTest {
         library.setId(1);
         library.setName("Ife's library");
 
-        this.mockMvc.perform(patch("/library/update")
+        this.mockMvc.perform(patch("/library/updateLibrary")
                 .contentType("application/json")
                 .content(mapper.writeValueAsString(library)))
                 .andDo(print())

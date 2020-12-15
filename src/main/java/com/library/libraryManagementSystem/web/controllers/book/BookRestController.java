@@ -1,12 +1,11 @@
 package com.library.libraryManagementSystem.web.controllers.book;
 
-import com.library.libraryManagementSystem.data.exception.ExceptionsInBookEntity;
-import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
+import com.library.libraryManagementSystem.data.exception.BookEntityException;
+import com.library.libraryManagementSystem.data.exception.NoSuchElementException;
 import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.service.book.BookServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,49 +21,49 @@ public class BookRestController {
 
     Book myBook;
 
-    @GetMapping("/all")
+    @GetMapping("/allBooks")
     public ResponseEntity<?> getAllBooks(){
         List<Book> books = bookService.getAllBooks();
         log.info("All libraries --> {}", books);
         return ResponseEntity.ok().body(books);
     }
-    @PostMapping("/create")
+    @PostMapping("/createBook")
     public ResponseEntity<?> createBook(@RequestBody Book book)  {
         try {
             bookService.createBook(book);
-        } catch (ExceptionsInBookEntity exe) {
+        } catch (BookEntityException exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
-        return new ResponseEntity<>(book, HttpStatus.CREATED);
+        return ResponseEntity.ok().body("Created");
     }
-    @DeleteMapping("one/{id}")
+    @DeleteMapping("/deleteBookById/{id}")
     public ResponseEntity<?> deleteBookById(@PathVariable Integer id){
         try{
             bookService.deleteBookById(id);
-        }catch (ItemDoesNotExist exe){
+        }catch (NoSuchElementException exe){
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return ResponseEntity.ok().body("Deleted");
     }
 
 
-    @PatchMapping("/update")
+    @PatchMapping("/updateBook")
     public @ResponseBody ResponseEntity<?> updateBook(@RequestBody Book book){
         try{
             bookService.updateBook(book);
-        } catch (ExceptionsInBookEntity exe) {
+        } catch (BookEntityException exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return ResponseEntity.ok().body(book);
     }
 
-    @GetMapping("one/{id}")
+    @GetMapping("/findBookById/{id}")
     public ResponseEntity<?> findBookById(@PathVariable Integer id){
 
         try{
             myBook = bookService.findBookById(id);
-        } catch (ItemDoesNotExist itemDoesNotExist) {
-            ResponseEntity.badRequest().body(itemDoesNotExist.getMessage());
+        } catch (NoSuchElementException noSuchElementException) {
+            ResponseEntity.badRequest().body(noSuchElementException.getMessage());
         }
         return ResponseEntity.ok().body(myBook);
     }

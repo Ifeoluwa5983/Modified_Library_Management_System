@@ -1,12 +1,11 @@
 package com.library.libraryManagementSystem.web.controllers.readers;
 
-import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
-import com.library.libraryManagementSystem.data.exception.ExceptionInReaderEntity;
+import com.library.libraryManagementSystem.data.exception.NoSuchElementException;
+import com.library.libraryManagementSystem.data.exception.ReaderEntityException;
 import com.library.libraryManagementSystem.data.model.Reader;
 import com.library.libraryManagementSystem.service.reader.ReaderServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,48 +20,48 @@ public class ReaderRestController {
 
     Reader reader;
 
-    @GetMapping("/all")
+    @GetMapping("/allReaders")
     public ResponseEntity<?> getAllReaders(){
         List<Reader> readers = readerService.getAllReaders();
         log.info("All libraries --> {}", readers);
         return ResponseEntity.ok().body(readers);
     }
-    @PostMapping("/create")
+    @PostMapping("/createReader")
     public ResponseEntity<?> createReader(@RequestBody Reader reader)  {
         try {
             readerService.createReader(reader);
-        } catch (ExceptionInReaderEntity exe) {
+        } catch (ReaderEntityException exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
-        return new ResponseEntity<>(reader, HttpStatus.CREATED);
+        return ResponseEntity.ok().body("created");
     }
-    @DeleteMapping("one/{id}")
+    @DeleteMapping("/deleteReaderById/{id}")
     public ResponseEntity<?> deleteReaderById(@PathVariable Integer id){
         try{
             readerService.deleteReaderById(id);
-        }catch (ItemDoesNotExist exe){
+        }catch (NoSuchElementException exe){
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return ResponseEntity.ok().body("Deleted");
     }
 
-    @PatchMapping("/update")
+    @PatchMapping("/updateReader")
     public @ResponseBody ResponseEntity<?> updateReader(@RequestBody Reader reader){
         try{
             readerService.updateReader(reader);
-        } catch (ExceptionInReaderEntity exe) {
+        } catch (ReaderEntityException exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
         return ResponseEntity.ok().body(reader);
     }
 
-    @GetMapping("one/{id}")
+    @GetMapping("/findReaderById/{id}")
     public ResponseEntity<?> findReaderById(@PathVariable Integer id){
 
         try{
             reader = readerService.findReaderById(id);
-        } catch (ItemDoesNotExist itemDoesNotExist) {
-            ResponseEntity.badRequest().body(itemDoesNotExist.getMessage());
+        } catch (NoSuchElementException noSuchElementException) {
+            ResponseEntity.badRequest().body(noSuchElementException.getMessage());
         }
         return ResponseEntity.ok().body(reader);
     }

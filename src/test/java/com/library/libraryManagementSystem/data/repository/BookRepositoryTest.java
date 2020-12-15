@@ -1,6 +1,6 @@
 package com.library.libraryManagementSystem.data.repository;
 
-import com.library.libraryManagementSystem.data.exception.ExceptionsInBookEntity;
+import com.library.libraryManagementSystem.data.exception.BookEntityException;
 import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.data.model.IsAvailable;
 import com.library.libraryManagementSystem.data.model.Library;
@@ -39,7 +39,7 @@ class BookRepositoryTest {
         book.setIsAvailable(IsAvailable.FALSE);
         book.setTitle("Achievements");
 
-        assertThrows(ExceptionsInBookEntity.class, ()->{
+        assertThrows(BookEntityException.class, ()->{
             bookRepository.saveBook(book);
         });
 

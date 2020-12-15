@@ -1,9 +1,9 @@
 package com.library.libraryManagementSystem.service.book;
 
-import com.library.libraryManagementSystem.data.exception.ExceptionsInBookEntity;
+import com.library.libraryManagementSystem.data.exception.BookEntityException;
 import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.data.repository.BookRepository;
-import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
+import com.library.libraryManagementSystem.data.exception.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,34 +20,34 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBookById(Integer id) throws ItemDoesNotExist {
+    public void deleteBookById(Integer id) throws NoSuchElementException {
         try{
             bookRepository.deleteById(id);
         }catch (Exception e){
-            throw new ItemDoesNotExist("The book with the id does not exist");
+            throw new NoSuchElementException("The book with the id does not exist");
         }
     }
 
     @Override
-    public Book findBookById(Integer id) throws ItemDoesNotExist {
+    public Book findBookById(Integer id) throws NoSuchElementException {
 
         Book book = bookRepository.findById(id).orElse(null);
 
         if(book != null){
             return book;
         }else{
-            throw new ItemDoesNotExist("The book with the id does not exist");
+            throw new NoSuchElementException("The book with the id does not exist");
         }
     }
 
     @Override
-    public Book updateBook(Book book) throws ExceptionsInBookEntity {
+    public Book updateBook(Book book) throws BookEntityException {
         if(book.getId() == null){
-            throw new ExceptionsInBookEntity("Id cannot be null");
+            throw new BookEntityException("Id cannot be null");
         }
         Book newBook = bookRepository.findById(book.getId()).get();
         if(newBook != null){
-            throw new ExceptionsInBookEntity("The book does not exists");
+            throw new BookEntityException("The book does not exists");
         }
         if(book.getIsAvailable() != null){
             newBook.setIsAvailable(book.getIsAvailable());
@@ -59,9 +59,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book createBook(Book book) throws ExceptionsInBookEntity {
+    public Book createBook(Book book) throws BookEntityException {
         if(book == null){
-            throw new ExceptionsInBookEntity("Please create a book");
+            throw new BookEntityException("Please create a book");
         }
         return bookRepository.saveBook(book);
     }

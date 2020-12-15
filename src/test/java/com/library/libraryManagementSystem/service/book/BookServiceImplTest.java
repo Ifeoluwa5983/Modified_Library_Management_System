@@ -1,9 +1,9 @@
 package com.library.libraryManagementSystem.service.book;
 
-import com.library.libraryManagementSystem.data.exception.ExceptionsInBookEntity;
+import com.library.libraryManagementSystem.data.exception.BookEntityException;
 import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.data.repository.BookRepository;
-import com.library.libraryManagementSystem.data.exception.ItemDoesNotExist;
+import com.library.libraryManagementSystem.data.exception.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,7 +42,7 @@ class BookServiceImplTest {
     }
 
     @Test
-    void mockTestForCreateBook() throws ExceptionsInBookEntity {
+    void mockTestForCreateBook() throws BookEntityException {
         when(bookRepository.saveBook(book)).thenReturn(book);
         bookService.createBook(book);
         verify(bookRepository, times(1)).saveBook(book);
@@ -55,14 +55,14 @@ class BookServiceImplTest {
     }
 
     @Test
-    void mockTestForFindBookById() throws ItemDoesNotExist {
+    void mockTestForFindBookById() throws NoSuchElementException {
         when(bookRepository.findById(3)).thenReturn(Optional.of(book));
         bookService.findBookById(3);
         verify(bookRepository, times(1)).findById(3);
     }
 
     @Test
-    void mockTestForDeleteBookById() throws ItemDoesNotExist {
+    void mockTestForDeleteBookById() throws NoSuchElementException {
         doNothing().when(bookRepository).deleteById(3);
         bookService.deleteBookById(3);
         verify(bookRepository, times(1)).deleteById(3);
@@ -71,7 +71,7 @@ class BookServiceImplTest {
     @Test
     @Transactional
     @Rollback(value = false)
-    void mockTestForUpdatingABook() throws ExceptionsInBookEntity {
+    void mockTestForUpdatingABook() throws BookEntityException {
         when(bookRepository.saveBook(book)).thenReturn(book);
         book.setTitle("Dead");
         bookService.updateBook(book);
