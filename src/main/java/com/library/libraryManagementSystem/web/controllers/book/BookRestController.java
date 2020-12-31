@@ -6,6 +6,7 @@ import com.library.libraryManagementSystem.data.model.Book;
 import com.library.libraryManagementSystem.service.book.BookServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class BookRestController {
         } catch (BookEntityException exe) {
             ResponseEntity.badRequest().body(exe.getMessage());
         }
-        return ResponseEntity.ok().body("Created");
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @DeleteMapping("/deleteBookById/{id}")
     public ResponseEntity<?> deleteBookById(@PathVariable Integer id){
